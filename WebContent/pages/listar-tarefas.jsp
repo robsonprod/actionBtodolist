@@ -7,9 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Lista de Tarefas</title>
-<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" >
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" >
-<link rel="stylesheet" type="text/css" href="css/style.css" >
+<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css" >
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" >
+<link rel="stylesheet" type="text/css" href="../css/style.css" >
 </head>
 <body>
 <c:import url="cabecalho.jsp" />
@@ -40,11 +40,11 @@
 		   				<td>${tarefa.nome}</td>
 		   				<td>${tarefa.descricao}</td>
 		   				<td>
-		   					<a href='<c:url value="/sistema?logica=EditaTarefa&id=${tarefa.id}" />' >
+		   					<a href='<c:url value="/pages/sistema?logica=EditaTarefa&id=${tarefa.id}" />' >
 		   						<i style="padding-right: 12px;" class="fa fa-file-text-o fa-1x"></i>
 		   					</a>
 		   					
-		   					<a href='<c:url value="/sistema?logica=RemoveTarefa&id=${tarefa.id}" />'>
+		   					<a href='<c:url value="/pages/sistema?logica=RemoveTarefa&id=${tarefa.id}" />'>
 		   						<i style="color: red;" class="fa fa-times fa-1x"></i>
 		   					</a> 
 		   				</td>
@@ -53,7 +53,11 @@
 		   		</tbody>
 		   		</c:when>
 		   		<c:otherwise>
-		   			Campo não preenchido.
+		   			<tbody>
+			   			<tr>
+			   				<td>Nenhuma tarefa cadastrada</td>
+			   			</tr>
+			   		</tbody>
 		   		</c:otherwise>
 	   		</c:choose>
 		

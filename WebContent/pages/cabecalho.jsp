@@ -7,9 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" >
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" >
-<link rel="stylesheet" type="text/css" href="css/style.css" >
+<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css" >
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" >
+<link rel="stylesheet" type="text/css" href="../css/style.css" >
 </head>
 <body class="cabecalho">
 <nav class="navbar navbar-default navbar-fixed-top">

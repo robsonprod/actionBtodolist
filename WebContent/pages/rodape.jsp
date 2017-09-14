@@ -5,9 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" >
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" >
-<link rel="stylesheet" type="text/css" href="css/style.css" >
+<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css" >
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" >
+<link rel="stylesheet" type="text/css" href="../css/style.css" >
 </head>
 <body>
 	<footer style="text-align: center; background-color: #f8f8f8; padding-top: 10px; padding-bottom: 10px;" id="rodape" class="footer">

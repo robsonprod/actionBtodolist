@@ -28,10 +28,8 @@ public class EditaTarefaLogica implements Logica{
 		request.setAttribute("nome", tarefa.getNome());
 		request.setAttribute("descricao", tarefa.getDescricao());
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/pages/adiciona-contato.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/pages/adiciona-tarefa.jsp");
 		rd.forward(request, response);
-		
-		
 		
 	}
 	

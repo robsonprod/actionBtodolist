@@ -7,14 +7,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Adicionar Tarefa</title>
-<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" >
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" >
-<link rel="stylesheet" type="text/css" href="css/style.css" >
+<link rel="stylesheet" type="text/css" href="../css/font-awesome.min.css" >
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" >
+<link rel="stylesheet" type="text/css" href="../css/style.css" >
 </head>
 <body>
 <c:import url="cabecalho.jsp" />
 
-<div class="col-md-6 col-md-offset-4">
+<div class="corpo col-md-6 col-md-offset-4">
 	<form class="add-tarefa" action="sistema?logica=AdicionaTarefa" method="post">
 		<c:choose>
 			<c:when test="${not empty id}">

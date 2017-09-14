@@ -23,7 +23,7 @@ public class RemoveTarefaLogica implements Logica{
 		tarefa.setId(new Long(id));
 		
 		dao.remove(tarefa);
-		request.setAttribute("msgUsuario", "Contato removido");
+		request.setAttribute("msgUsuario", "Tarefa removida");
 		RequestDispatcher rd = request.getRequestDispatcher("/pages/index.jsp");
 		rd.forward(request, response);
 		
