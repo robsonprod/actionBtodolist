@@ -24,10 +24,7 @@ public class AdicionaTarefaLogica implements Logica{
 		Connection connect = (Connection) request.getAttribute("connect");
 		TarefaDao dao = new TarefaDao(connect);
 
-		Tarefa tarefa = new Tarefa();
-		tarefa.setUser_id(new Long(user.getId()));
-		tarefa.setNome(nome);
-		tarefa.setDescricao(descricao);
+		Tarefa tarefa = atribuiValores(nome, descricao, user);
 		
 		if(request.getParameter("id") != null){
 			String id = request.getParameter("id");
@@ -41,5 +38,13 @@ public class AdicionaTarefaLogica implements Logica{
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/pages/index.jsp");
 		rd.forward(request, response);
+	}
+
+	private Tarefa atribuiValores(String nome, String descricao, Usuario user) {
+		Tarefa tarefa = new Tarefa();
+		tarefa.setUser_id(new Long(user.getId()));
+		tarefa.setNome(nome);
+		tarefa.setDescricao(descricao);
+		return tarefa;
 	}
 }
