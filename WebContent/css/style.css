@@ -1,0 +1,28 @@
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    background-color: #f8f8f8;
+    /* margin-bottom: 10px; */
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.texto-menu{
+	padding-bottom: 160px;
+	text-align: center;
+}
+.msg{
+	z-index: 9999;
+	margin-top: 70px;
+    text-align: center;
+    width: 45%;
+}
+.add-tarefa{
+	padding-top: 150px;
+}
+
+.corpo{
+	padding-top: 150px;
+}
