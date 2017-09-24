@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import br.todolist.dao.TarefaDao;
+import br.todolist.exception.AdicionaTarefaException;
 import br.todolist.model.Logica;
 import br.todolist.model.Tarefa;
 import br.todolist.model.Usuario;
@@ -40,11 +41,15 @@ public class AdicionaTarefaLogica implements Logica{
 		rd.forward(request, response);
 	}
 
-	private Tarefa atribuiValores(String nome, String descricao, Usuario user) {
+	private Tarefa atribuiValores(String nome, String descricao, Usuario user) throws AdicionaTarefaException {
+		if(nome == null || nome == "") {
+			throw new AdicionaTarefaException("Nome invalido");
+		}
+		
 		Tarefa tarefa = new Tarefa();
 		tarefa.setUser_id(new Long(user.getId()));
 		tarefa.setNome(nome);
 		tarefa.setDescricao(descricao);
-		return tarefa;
+		return tarefa;	
 	}
 }
