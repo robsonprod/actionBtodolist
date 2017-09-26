@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -20,53 +21,42 @@ import br.todolist.exception.AdicionaTarefaException;
 import br.todolist.manager.AdicionaTarefaLogica;
 import br.todolist.manager.PesquisaTarefaLogica;
 import br.todolist.model.Tarefa;
+import br.todolist.model.Usuario;
 
 
 public class AdicionaTarefaTest {
 	
 	@Mock
-	private HttpServletRequest request;
-	@Mock
-	private HttpServletResponse response;
-	@Mock
 	private Tarefa tarefa;
-	@Mock
-	private TarefaDao dao;
 
 	@Before
-	public void setup(){
+	public void init(){
 		MockitoAnnotations.initMocks(this);
 	}
 
 	@Test
 	public void naoDeveAdicionarTarefaSemNome() throws Exception {
-		AdicionaTarefaLogica addtarefa = new AdicionaTarefaLogica();
-		
-		request = Mockito.mock( HttpServletRequest.class);
-	    response = Mockito.mock( HttpServletResponse.class);
-
+		//cenario
+		AdicionaTarefaLogica addtarefa = Mockito.mock(AdicionaTarefaLogica.class);
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+	    HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
 	    tarefa = new Tarefa();
 	    
-	    when(request.getParameter("nome")).thenReturn("");
-
+	    request.setAttribute("nome", "tarefa1");
+	    when(request.getParameter("nome")).thenReturn("tarefa1");
+	    
+	    
+	    
+	    //ação
+	    System.out.println(request.getParameter("nome"));
+	    
 	    addtarefa.executa(request, response);
 	    
-		//verificacao
+	    //verificacao
+	    
+	    
 	    Assert.assertEquals(tarefa.getNome(), "tarefa1");
 
-	}
-	
-	@Test
-	public void pesquisaTarefa() throws Exception {
-		HttpServletRequest request = Mockito.mock( HttpServletRequest.class);
-	    HttpServletResponse response = Mockito.mock( HttpServletResponse.class);
-	    
-	    PesquisaTarefaLogica pTarefa = new PesquisaTarefaLogica();
-	    
-	    pTarefa.executa(request, response);
-	    
-	    
-	    
 	}
 	
 	

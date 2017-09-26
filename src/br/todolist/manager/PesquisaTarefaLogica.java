@@ -1,6 +1,8 @@
 package br.todolist.manager;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +28,9 @@ public class PesquisaTarefaLogica implements Logica{
 		Connection connect = (Connection) request.getAttribute("connect");
 		TarefaDao dao = new TarefaDao(connect);
 
-		tarefa = dao.getTarefaNome(nome);
+		tarefa = dao.getTarefaPeloNome(nome);
+		System.out.println(tarefa.getUser_id());
+		System.out.println(user.getId());
 		
 		if(tarefa.getUser_id() == user.getId()) {
 			request.setAttribute("tarefaNome", tarefa.getNome());

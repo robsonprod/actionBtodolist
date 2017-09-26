@@ -14,7 +14,7 @@ git clone https://github.com/robsonprod/actionBtodolist.git
         javax.servlet.jsp.jstl-1.2.1.jar
         javax.servlet.jsp.jstl-api-1.2.1.jar
         taglibs-standard-impl-1.2.1.jar
-    4. Importe o arquivo todolist.sql no MySQL Workbench;
+    4. Importe a base de dados *todolist.sql* no MySQL Workbench;
     5. Insira um novo usuário para poder entrar na aplicação;
     6. Abra e edite o arquivo *ConnectionFactory.java* em /Java Resources/src/br.todolist.dao/
          para sua configuração do banco MySql;

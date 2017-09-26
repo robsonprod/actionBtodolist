@@ -22,7 +22,7 @@
 	<ul class="nav navbar-nav navbar-right">
         <li>
 			<c:choose>
-				<c:when test="${userLogado.cargo == 2}">
+				<c:when test="${userLogado.cargo == 1}">
 					<a href="/actionBtodolist/pages/gerenciar-usuarios.jsp">Gerenciar Usuários</a>
 				</c:when>
 			</c:choose>

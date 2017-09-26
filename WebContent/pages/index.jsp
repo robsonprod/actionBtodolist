@@ -16,16 +16,18 @@
 
 <c:choose>
 	<c:when test="${not empty msgUsuario}">
-		<p class="col-md-4 col-md-offset-4 msg alert alert-success">${msgUsuario} </p>
+		<span class="col-md-4 col-md-offset-4 msg alert alert-success">${msgUsuario} </span>
 	</c:when>
-</c:choose>
-
-	<div class="jumbotron texto-menu">
-		<div class="col-md-5 col-md-offset-4">
-			<h2>Seja bem vindo,</h2><p style="font-size: 20px;"> ${userLogado.nomeLogin} </p>
-			a sua agenda de tarefas!!!
+	<c:otherwise>
+		<div class="jumbotron texto-menu">
+			<div class="col-md-5 col-md-offset-4">
+				<h2>Seja bem vindo,</h2><p style="font-size: 20px;"> ${userLogado.nomeLogin} </p>
+				a sua agenda de tarefas!!!
+			</div>
 		</div>
-	</div>
+ 	</c:otherwise>
+</c:choose>
+	
 	
 	<div class="row col-md-5 col-md-offset-4">
 		<p>Opções</p>

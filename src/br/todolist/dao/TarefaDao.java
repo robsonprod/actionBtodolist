@@ -119,7 +119,7 @@ public class TarefaDao {
 		}
 	}
 	
-	public Tarefa getTarefaNome(String nomeTarefa){
+	public Tarefa getTarefaPeloNome(String nomeTarefa){
 		try{
 			PreparedStatement ps = this.connect.prepareStatement("select * from tarefa where nome like ? ");
 			ps.setString(1, nomeTarefa+"%");
