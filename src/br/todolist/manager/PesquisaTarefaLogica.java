@@ -17,7 +17,7 @@ import br.todolist.model.Usuario;
 public class PesquisaTarefaLogica implements Logica{
 
 	@Override
-	public void executa(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public boolean executa(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		HttpSession session = request.getSession();
 		Usuario user = new Usuario();
@@ -44,7 +44,7 @@ public class PesquisaTarefaLogica implements Logica{
 		}
 		
 		
-		
+		return true;
 	}
 
 }

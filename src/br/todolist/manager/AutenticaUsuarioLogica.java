@@ -14,7 +14,7 @@ import br.todolist.model.Usuario;
 public class AutenticaUsuarioLogica implements Logica {
 
 	@Override
-	public void executa(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public boolean executa(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		Usuario userAutenticado = null;
 		String login = request.getParameter("nomeLogin");
@@ -29,9 +29,11 @@ public class AutenticaUsuarioLogica implements Logica {
 			session.setAttribute("userLogado", userAutenticado);
 			RequestDispatcher rd = request.getRequestDispatcher("/pages/index.jsp");
 			rd.forward(request, response);
+			return true;
 		}else{
 			request.setAttribute("msgUsuario", "login ou senha inválidos!");
 			response.sendRedirect("/pages/login.jsp");
+			return false;
 		}
 	}
 

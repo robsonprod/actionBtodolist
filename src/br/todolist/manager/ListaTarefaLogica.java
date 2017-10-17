@@ -17,7 +17,7 @@ import br.todolist.model.Usuario;
 public class ListaTarefaLogica implements Logica{
 
 	@Override
-	public void executa(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public boolean executa(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		Connection connect = (Connection) request.getAttribute("connect");
 		List<Tarefa> tarefas = new ArrayList<>();
@@ -33,6 +33,7 @@ public class ListaTarefaLogica implements Logica{
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/pages/listar-tarefas.jsp");
 		rd.forward(request, response);
+		return true;
 	}
 
 }

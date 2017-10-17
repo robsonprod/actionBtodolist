@@ -13,7 +13,7 @@ import br.todolist.model.Tarefa;
 public class RemoveTarefaLogica implements Logica{
 
 	@Override
-	public void executa(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public boolean executa(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
 		
 		Tarefa tarefa = new Tarefa();
@@ -26,7 +26,7 @@ public class RemoveTarefaLogica implements Logica{
 		request.setAttribute("msgUsuario", "Tarefa removida");
 		RequestDispatcher rd = request.getRequestDispatcher("/pages/index.jsp");
 		rd.forward(request, response);
-		
+		return true;
 	}
 
 }

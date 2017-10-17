@@ -14,8 +14,9 @@ import br.todolist.model.Tarefa;
 import br.todolist.model.Usuario;
 
 public class AdicionaTarefaLogica implements Logica{
+	boolean result = false;
 
-	public void executa(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public boolean executa(HttpServletRequest request, HttpServletResponse response) throws Exception, AdicionaTarefaException{
 		String nome = request.getParameter("nome");
 		String descricao = request.getParameter("descricao");
 		HttpSession session = request.getSession();
@@ -25,31 +26,35 @@ public class AdicionaTarefaLogica implements Logica{
 		Connection connect = (Connection) request.getAttribute("connect");
 		TarefaDao dao = new TarefaDao(connect);
 
-		Tarefa tarefa = atribuiValores(nome, descricao, user);
-		
-		if(request.getParameter("id") != null){
-			String id = request.getParameter("id");
-			tarefa.setId(new Long(id));
-			request.setAttribute("msgUsuario", "Tarefa atualizada com sucesso!");
-			dao.altera(tarefa);
-		}else{
-			dao.adiciona(tarefa);
-			request.setAttribute("msgUsuario", "Tarefa cadastrada com sucesso!");
-		}
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/pages/index.jsp");
-		rd.forward(request, response);
-	}
-
-	private Tarefa atribuiValores(String nome, String descricao, Usuario user) throws AdicionaTarefaException {
-		if(nome == null || nome == "") {
-			throw new AdicionaTarefaException("Nome invalido");
-		}
-		
 		Tarefa tarefa = new Tarefa();
 		tarefa.setUser_id(new Long(user.getId()));
 		tarefa.setNome(nome);
 		tarefa.setDescricao(descricao);
-		return tarefa;	
+		
+		if(request.getParameter("id") != null && possuiNomeDescricao(tarefa)){
+			String id = request.getParameter("id");
+			tarefa.setId(new Long(id));
+			request.setAttribute("msgUsuario", "Tarefa atualizada com sucesso!");
+			dao.altera(tarefa);
+			result = true;
+		}
+		
+		if(possuiNomeDescricao(tarefa)) {
+			dao.adiciona(tarefa);
+			request.setAttribute("msgUsuario", "Tarefa cadastrada com sucesso!");
+			result = true;
+		}else {
+			result = false;
+			throw new AdicionaTarefaException("Não é possivel adicionar tarefa com campos em branco!");
+		}
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/pages/index.jsp");
+		rd.forward(request, response);
+		return result;
 	}
+
+	public boolean possuiNomeDescricao(Tarefa tarefa) {
+		return tarefa.getNome() != null || tarefa.getNome().isEmpty() && tarefa.getDescricao() != null || tarefa.getDescricao().isEmpty();
+	}
+
 }

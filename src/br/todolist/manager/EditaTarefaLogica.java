@@ -13,7 +13,7 @@ import br.todolist.model.Tarefa;
 public class EditaTarefaLogica implements Logica{
 
 	@Override
-	public void executa(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public boolean executa(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		String id = request.getParameter("id");
 		
@@ -30,7 +30,7 @@ public class EditaTarefaLogica implements Logica{
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/pages/adiciona-tarefa.jsp");
 		rd.forward(request, response);
-		
+		return true;
 	}
 	
 }

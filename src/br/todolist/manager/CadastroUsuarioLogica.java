@@ -9,7 +9,7 @@ import br.todolist.model.Usuario;
 public class CadastroUsuarioLogica implements Logica{
 
 	@Override
-	public void executa(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public boolean executa(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		String nomeLogin = request.getParameter("nomeLogin");
 		String senha = request.getParameter("senha");
@@ -20,6 +20,7 @@ public class CadastroUsuarioLogica implements Logica{
 		
 		
 		response.sendRedirect("/login.jsp");
+		return true;
 	}
 
 }
