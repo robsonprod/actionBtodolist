@@ -31,13 +31,7 @@ public class AdicionaTarefaLogica implements Logica{
 		tarefa.setNome(nome);
 		tarefa.setDescricao(descricao);
 		
-		if(request.getParameter("id") != null && possuiNomeDescricao(tarefa)){
-			String id = request.getParameter("id");
-			tarefa.setId(new Long(id));
-			request.setAttribute("msgUsuario", "Tarefa atualizada com sucesso!");
-			dao.altera(tarefa);
-			result = true;
-		}
+		tarefaExistente(request, dao, tarefa);
 		
 		if(possuiNomeDescricao(tarefa)) {
 			dao.adiciona(tarefa);
@@ -50,6 +44,19 @@ public class AdicionaTarefaLogica implements Logica{
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/pages/index.jsp");
 		rd.forward(request, response);
+		return result;
+	}
+
+	public boolean tarefaExistente(HttpServletRequest request, TarefaDao dao, Tarefa tarefa) throws AdicionaTarefaException {
+		if(request.getParameter("id") != null && possuiNomeDescricao(tarefa)){
+			String id = request.getParameter("id");
+			tarefa.setId(new Long(id));
+			request.setAttribute("msgUsuario", "Tarefa atualizada com sucesso!");
+			dao.altera(tarefa);
+			result = true;
+		}else {
+			result = false;
+		}
 		return result;
 	}
 

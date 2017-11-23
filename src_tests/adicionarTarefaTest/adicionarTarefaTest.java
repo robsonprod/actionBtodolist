@@ -1,4 +1,4 @@
-package tests;
+package adicionarTarefaTest;
 
 import java.sql.Connection;
 
@@ -26,16 +26,16 @@ import br.todolist.model.Tarefa;
 import br.todolist.model.Usuario;
 
 
-public class AdicionaTarefaTest {
+public class adicionarTarefaTest {
 	
-	AdicionaTarefaLogica addtarefa;
-	HttpServletRequest request;
-    HttpServletResponse response;
-    Connection connect;
-    TarefaDao dao;
-	Usuario user;
-    Tarefa tarefa;
-    HttpSession session;
+	private AdicionaTarefaLogica addtarefa;
+	private HttpServletRequest request;
+	private HttpServletResponse response;
+	private Connection connect;
+	private TarefaDao dao;
+	private Usuario user;
+	private Tarefa tarefa;
+	private HttpSession httpSession;
 
 	@Before
 	public void init(){
@@ -44,10 +44,10 @@ public class AdicionaTarefaTest {
 		tarefa = new Tarefa();
 		request = Mockito.mock(HttpServletRequest.class);
 		response = Mockito.mock(HttpServletResponse.class);
-		session = Mockito.mock(HttpSession.class);
 		connect = Mockito.mock(Connection.class);
-		dao = Mockito.mock(TarefaDao.class);
-		user = Mockito.mock(Usuario.class);
+		httpSession = Mockito.mock(HttpSession.class);
+		dao = new TarefaDao(connect);
+		user = new Usuario();
 	}
 
 	@Test(expected=AdicionaTarefaException.class)
@@ -58,26 +58,27 @@ public class AdicionaTarefaTest {
 		user.setCargo(1);
 		user.setNomeLogin("admin");
 		user.setSenha("123");
-		session.setAttribute("userLogado", user);
-		
-		when(session.getAttribute("userLogado")).thenReturn(user);
+		httpSession.setAttribute("userLogado", user);
+		user = (Usuario) httpSession.getAttribute("userLogado");
+		when(httpSession.getAttribute("userLogado")).thenReturn(user);
 
 		when(request.getParameter("nome")).thenReturn("");
 		when(request.getParameter("descricao")).thenReturn("");
-		when(request.getParameter("id")).thenReturn(null);
+		when(request.getParameter("id")).thenReturn("");
 		String nome = request.getParameter("nome");
 		String descricao = request.getParameter("descricao");
 
-		dao = new TarefaDao(connect);
 		tarefa.setUser_id(new Long(1));
 		tarefa.setNome(nome);
 		tarefa.setDescricao(descricao);
 		
-	    when(addtarefa.executa(request, response)).thenThrow(new AdicionaTarefaException("Não é possivel adicionar tarefa com campos em branco!"));
-	    
+		
+		
 	    //verificacao
-	    addtarefa.possuiNomeDescricao(tarefa);
-	    addtarefa.executa(request, response);
+		boolean r = addtarefa.possuiNomeDescricao(tarefa);
+		Assert.assertEquals(false, r);
+		boolean r2 = addtarefa.executa(request, response);
+		Assert.assertEquals(false, r2);
 	}
 	
 	@Test
@@ -87,5 +88,20 @@ public class AdicionaTarefaTest {
 		Assert.assertEquals(tarefa.getNome(), "tarefa1");
 	}
 	
+//	duvida
+	public boolean place() {
+		int valor = 0;
+
+		try {
+			if(valor == 0) {
+				return false;
+			}
+		}catch(Exception e) {
+//			return false;
+		}
+		return true;
+	}
+	
 	
 }
+
