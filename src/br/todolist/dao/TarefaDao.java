@@ -119,33 +119,33 @@ public class TarefaDao {
 		}
 	}
 	
-	public Tarefa getTarefaPeloNome(String nomeTarefa){
-		try{
-			PreparedStatement ps = this.connect.prepareStatement("select * from tarefa where nome like ? ");
-			ps.setString(1, nomeTarefa+"%");
-			
-			Tarefa tarefa = null;
-			
-			ResultSet rs = ps.executeQuery();
-			
-			if(rs.next()){
-				Long idTarefa = rs.getLong("id");
-				String nome = rs.getString("nome");
-				String descricao = rs.getString("descricao");
-				
-				tarefa = new Tarefa();
-				tarefa.setId(idTarefa);
-				tarefa.setNome(nome);
-				tarefa.setDescricao(descricao);
-				
-			}
-			rs.close();
-			ps.close();
-			return tarefa;
-			
-		}catch(SQLException e){
-			throw new RuntimeException(e);
-		}
-	}
+//	public Tarefa getTarefaPeloNome(String nomeTarefa){
+//		try{
+//			PreparedStatement ps = this.connect.prepareStatement("select * from tarefa where nome like ? ");
+//			ps.setString(1, nomeTarefa+"%");
+//			
+//			Tarefa tarefa = null;
+//			
+//			ResultSet rs = ps.executeQuery();
+//			
+//			if(rs.next()){
+//				Long idTarefa = rs.getLong("id");
+//				String nome = rs.getString("nome");
+//				String descricao = rs.getString("descricao");
+//				
+//				tarefa = new Tarefa();
+//				tarefa.setId(idTarefa);
+//				tarefa.setNome(nome);
+//				tarefa.setDescricao(descricao);
+//				
+//			}
+//			rs.close();
+//			ps.close();
+//			return tarefa;
+//			
+//		}catch(SQLException e){
+//			throw new RuntimeException(e);
+//		}
+//	}
 	
 }

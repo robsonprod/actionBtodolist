@@ -1,4 +1,4 @@
-package adicionarTarefaTest;
+package unitario;
 
 import java.sql.Connection;
 
@@ -26,7 +26,7 @@ import br.todolist.model.Tarefa;
 import br.todolist.model.Usuario;
 
 
-public class adicionarTarefaTest {
+public class AdicionarTarefaTest {
 	
 	private AdicionaTarefaLogica addtarefa;
 	private HttpServletRequest request;

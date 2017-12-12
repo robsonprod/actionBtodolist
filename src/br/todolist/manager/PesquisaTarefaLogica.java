@@ -28,7 +28,7 @@ public class PesquisaTarefaLogica implements Logica{
 		Connection connect = (Connection) request.getAttribute("connect");
 		TarefaDao dao = new TarefaDao(connect);
 
-		tarefa = dao.getTarefaPeloNome(nome);
+//		tarefa = dao.getTarefaPeloNome(nome);
 		System.out.println(tarefa.getUser_id());
 		System.out.println(user.getId());
 		

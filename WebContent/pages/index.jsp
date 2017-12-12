@@ -43,11 +43,6 @@
 				Listar Suas Tarefas
 			</a>
 		</li>
-		<li>
-			<a href='<c:url value="/pages/pesquisar-tarefa.jsp" />'>
-				Pesquisar Tarefas
-			</a>
-		</li>
 	</ul>
 
 	</div>
