@@ -20,7 +20,7 @@
 	</c:when>
 </c:choose>
 
-<div class="col-md-5 col-md-offset-4">
+<div class="corpo col-md-5 col-md-offset-4">
 	<form action="/actionBtodolist/pages/sistema?logica=AutenticaUsuario" method="post" id="formLogin">	
 		<div class="form-group">
 			<label for="inputLogin">Login</label>

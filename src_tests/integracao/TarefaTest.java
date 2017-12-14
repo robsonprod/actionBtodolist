@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 import org.junit.After;
@@ -18,7 +17,7 @@ import br.todolist.dao.TarefaDao;
 import br.todolist.exception.TarefaServletException;
 import br.todolist.model.Tarefa;
 
-public class AdicionaTarefaTest {
+public class TarefaTest {
 
 	public Connection con;
 	public Tarefa tarefa;

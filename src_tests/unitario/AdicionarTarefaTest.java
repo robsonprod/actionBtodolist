@@ -21,7 +21,6 @@ import org.mockito.Spy;
 import br.todolist.dao.TarefaDao;
 import br.todolist.exception.AdicionaTarefaException;
 import br.todolist.manager.AdicionaTarefaLogica;
-import br.todolist.manager.PesquisaTarefaLogica;
 import br.todolist.model.Tarefa;
 import br.todolist.model.Usuario;
 
@@ -71,8 +70,6 @@ public class AdicionarTarefaTest {
 		tarefa.setUser_id(new Long(1));
 		tarefa.setNome(nome);
 		tarefa.setDescricao(descricao);
-		
-		
 		
 	    //verificacao
 		boolean r = addtarefa.possuiNomeDescricao(tarefa);

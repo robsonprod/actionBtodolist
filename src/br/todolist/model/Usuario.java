@@ -7,6 +7,16 @@ public class Usuario {
 	private String senha;
 	private Integer cargo;
 	
+	public Usuario() {
+		
+	}
+	
+	public Usuario(String nomeLogin, String senha, Integer cargo){
+		this.nomeLogin = nomeLogin;
+		this.senha = senha;
+		this.cargo = cargo;
+	}
+	
 	public Integer getCargo() {
 		return cargo;
 	}

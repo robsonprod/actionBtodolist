@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.todolist.model.Usuario;
 
@@ -14,25 +16,12 @@ public class UsuarioDao {
 		this.connect = connect;
 	}
 	
-	public void userCheck(int cargo) {
+	public void adiciona(Usuario user){
 		try {
-			PreparedStatement ps = this.connect.prepareStatement("select * from usuario where cargo=?");
-			ps.setInt(1, cargo);
-			
-			ps.execute();
-			ps.close();
-			
-		}catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
-	
-	public void cadastro(Usuario user){
-		try {
-			//tentando assim
-			PreparedStatement ps = this.connect.prepareStatement("insert into usuario (nomeLogin, senha) values (?, ?)");
-		ps.setString(1, user.getNomeLogin());
+			PreparedStatement ps = this.connect.prepareStatement("INSERT INTO usuario (nomeLogin, senha, cargo) VALUES (?, ?, ?)");
+			ps.setString(1, user.getNomeLogin());
 			ps.setString(2, user.getSenha());
+			ps.setInt(3, user.getCargo());
 			
 			ps.execute();
 			ps.close();
@@ -43,7 +32,7 @@ public class UsuarioDao {
 	
 	public Usuario autentica(String nomeLogin, String senha){
 		try{
-			PreparedStatement ps = this.connect.prepareStatement("select * from usuario where nomeLogin=? and senha=?");
+			PreparedStatement ps = this.connect.prepareStatement("SELECT * FROM usuario WHERE nomeLogin=? AND senha=?");
 			ps.setString(1, nomeLogin);
 			ps.setString(2, senha);
 			
@@ -68,4 +57,31 @@ public class UsuarioDao {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public List<Usuario> listaUsuarios(){
+		
+		PreparedStatement ps;
+		List<Usuario> usuarios = new ArrayList<>();
+		try {
+			ps = this.connect.prepareStatement("SELECT * FROM usuario");
+			ResultSet rs = ps.executeQuery();
+			
+			Usuario usuario = null;
+			while(rs.next()) {
+				usuario = new Usuario();
+				usuario.setId(rs.getLong("id"));
+				usuario.setCargo(rs.getInt("cargo"));
+				usuario.setNomeLogin(rs.getString("nomeLogin"));
+				usuarios.add(usuario);
+			}
+			rs.close();
+			ps.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return usuarios;
+	}
+	
 }

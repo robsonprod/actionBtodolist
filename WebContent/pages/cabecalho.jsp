@@ -23,7 +23,14 @@
         <li>
 			<c:choose>
 				<c:when test="${userLogado.cargo == 1}">
-					<a href="/actionBtodolist/pages/gerenciar-usuarios.jsp">Gerenciar Usuários</a>
+					<a href='<c:url value="/pages/sistema?logica=ListarUsuario" />'>Gerenciar Usuários</a>
+				</c:when>
+			</c:choose>
+        </li>
+        <li class="text-right">
+			<c:choose>
+				<c:when test="${userLogado != null}">
+					<a class="text-right" href='<c:url value="/pages/sistema?logica=DeslogarUsuario" />' >Deslogar</a>
 				</c:when>
 			</c:choose>
         </li>

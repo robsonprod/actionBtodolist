@@ -14,7 +14,47 @@
 <body class="corpo">
 <c:import url="cabecalho.jsp" />
 
-usuarios
+<div class="corpo table-responsive col-md-10 col-md-offset-1">
+	<table class="table table-striped">
+	
+   		<thead>
+   			<tr>
+   			<th>#</th>
+   				<th>Login</th>
+   				<th>Cargo</th>
+   			</tr>
+   		</thead>
+		<c:forEach var="usuario" items="${usuarios}" varStatus="id">
+			<c:choose>
+		   		<c:when test="${not empty usuario.nomeLogin}">
+		   		<tbody>
+		   			<tr>
+		   				<td>${id.count}</td>
+		   				<td>${usuario.nomeLogin}</td>
+		   				<c:choose>
+					   		<c:when test="${usuario.cargo == 1}">
+					   			<td>Admin</td>
+					   		</c:when>
+					   		<c:otherwise>
+		 						<td>Usuário</td>
+		 					</c:otherwise>
+				   		</c:choose>
+		   				
+		   			</tr>
+		   		</tbody>
+		   		</c:when>
+		   		<c:otherwise>
+		   			<tbody>
+			   			<tr>
+			   				<td>Nenhum usuario cadastrada</td>
+			   			</tr>
+			   		</tbody>
+		   		</c:otherwise>
+	   		</c:choose>
+		
+		</c:forEach>
+	</table>
+</div>
 
 <c:import url="rodape.jsp" />
 
