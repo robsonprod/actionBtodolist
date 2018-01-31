@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,7 +18,7 @@ import br.todolist.dao.TarefaDao;
 import br.todolist.exception.TarefaServletException;
 import br.todolist.model.Tarefa;
 
-public class TarefaTest {
+public class TarefaTest{
 
 	public Connection con;
 	public Tarefa tarefa;
@@ -31,7 +32,6 @@ public class TarefaTest {
 	
 	@Before
 	public void init() {
-		//por que o dao nao da certo aqui e o limparBanco da
 		con = new ConnectionFactory().getConnection();
 	}
 	
@@ -41,15 +41,16 @@ public class TarefaTest {
 	}
 	
 	@Test
-	public void deveAdicionarTarefa() throws SQLException {
-		Tarefa tarefa = new Tarefa("tarefa1", "tarefa teste 1", new Long(1));
-		
+	public void deveAdicionarTarefa(){
+		boolean result = false;
+
+		Tarefa tarefa = new Tarefa("tarefa1", "tarefa teste 1", new Long(2));
 		TarefaDao dao = new TarefaDao(con);
 		dao.adiciona(tarefa);
 
-		List<Tarefa> tarefas = dao.getLista(new Long(1));
+		result = consultaTarefa();
 
-		Assert.assertEquals(1, tarefas.size());
+		Assert.assertTrue(result);
 	}
 	
 	@Test
@@ -65,38 +66,56 @@ public class TarefaTest {
 	}
 	
 	@Test
-	public void deveRemoverTarefa() {
+	public void deveRemoverTarefa() throws TarefaServletException {
 		boolean result = false;
 		TarefaDao dao = new TarefaDao(con);
 		executeSql("insert into tarefa (nome, descricao, id_usuario) values ('tarefa1', 'descricao tarefa1', 2)");
+		Integer idUsuario = 2;
 		
-		try {
-			PreparedStatement ps = this.con.prepareStatement("select * from tarefa where id_usuario=?");
-			ps.setLong(1, new Long(2));
-			
-			ResultSet rs = ps.executeQuery();
-			if(rs.next()){
-				String id = rs.getString("id");
-				String nome = rs.getString("nome");
-				String descricao = rs.getString("descricao");
-				tarefa = new Tarefa();
-				tarefa.setId(new Long(id));
-				tarefa.setNome(nome);
-				tarefa.setDescricao(descricao);
-			}
-			
-			rs.close();
-			ps.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		pegaTarefa(idUsuario);
 		
-		try {
-			dao.remove(tarefa);
-		} catch (TarefaServletException e) {
-			e.printStackTrace();
-		}
+		dao.remove(tarefa);
 		
+		result = consultaTarefa();
+		
+		Assert.assertFalse(result);
+		
+	}
+	
+	@Test
+	public void deveAlterarTarefa() {
+		TarefaDao dao = new TarefaDao(con);
+		executeSql("insert into tarefa (nome, descricao, id_usuario) values ('tarefa1', 'descricao tarefa1', 2)");
+		Integer idUsuario = 2;
+		
+		pegaTarefa(idUsuario);
+		
+		Assert.assertEquals("tarefa1", "tarefa1", tarefa.getNome());
+		
+		tarefa.setNome("novaTarefa");
+		
+		dao.altera(tarefa);
+		
+		Assert.assertEquals("novaTarefa", tarefa.getNome());
+		
+	}
+	
+	@Test
+	public void deveRetornarTarefa() {
+		TarefaDao dao = new TarefaDao(con);
+		executeSql("insert into tarefa (nome, descricao, id_usuario) values ('tarefa1', 'descricao tarefa1', 2)");
+		
+		Integer idUsuario = 2;
+		
+		Tarefa tarefa = pegaTarefa(idUsuario);
+		
+		Tarefa tarefaBuscada = dao.getTarefa(tarefa.getId());
+		
+		Assert.assertEquals(tarefa.getId(), tarefaBuscada.getId());
+	}
+	
+	private boolean consultaTarefa() {
+		boolean result = false;
 		try {
 			PreparedStatement ps = this.con.prepareStatement("select * from tarefa where id_usuario=?");
 			ps.setLong(1, new Long(2));
@@ -111,19 +130,13 @@ public class TarefaTest {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		Assert.assertFalse(result);
-		
+		return result;
 	}
-	
-	@Test
-	public void deveAlterarTarefa() {
-		TarefaDao dao = new TarefaDao(con);
-		executeSql("insert into tarefa (nome, descricao, id_usuario) values ('tarefa1', 'descricao tarefa1', 2)");
-		
+
+	private Tarefa pegaTarefa(Integer idUsuario) {
 		try {
 			PreparedStatement ps = this.con.prepareStatement("select * from tarefa where id_usuario=?");
-			ps.setLong(1, new Long(2));
+			ps.setLong(1, idUsuario);
 			
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){
@@ -141,47 +154,7 @@ public class TarefaTest {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		Assert.assertEquals("tarefa1", "tarefa1", tarefa.getNome());
-		
-		tarefa.setNome("novaTarefa");
-		
-		dao.altera(tarefa);
-		System.out.println(tarefa.getNome());
-		
-		Assert.assertEquals("novaTarefa", "novaTarefa", tarefa.getNome());
-		
-	}
-	
-	@Test
-	public void deveRetornarTarefa() {
-		TarefaDao dao = new TarefaDao(con);
-		executeSql("insert into tarefa (nome, descricao, id_usuario) values ('tarefa1', 'descricao tarefa1', 2)");
-		
-		try {
-			PreparedStatement ps = this.con.prepareStatement("select * from tarefa where id_usuario=?");
-			ps.setLong(1, new Long(2));
-			
-			ResultSet rs = ps.executeQuery();
-			if(rs.next()){
-				String id = rs.getString("id");
-				String nome = rs.getString("nome");
-				String descricao = rs.getString("descricao");
-				tarefa = new Tarefa();
-				tarefa.setId(new Long(id));
-				tarefa.setNome(nome);
-				tarefa.setDescricao(descricao);
-			}
-			
-			rs.close();
-			ps.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		Tarefa tarefaBuscada = dao.getTarefa(tarefa.getId());
-		
-		Assert.assertEquals(tarefa.getId(), tarefaBuscada.getId());
+		return tarefa;
 	}
 	
 	public void executeSql(String sql) {
@@ -203,5 +176,6 @@ public class TarefaTest {
 			e.printStackTrace();
 		}
 	}
+
 	
 }

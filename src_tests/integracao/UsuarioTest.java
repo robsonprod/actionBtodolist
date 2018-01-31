@@ -1,11 +1,17 @@
 package integracao;
 
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.dbunit.DatabaseTestCase;
+import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.DataSetException;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.xml.XmlDataSet;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,17 +19,18 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.todolist.dao.ConnectionFactory;
-import br.todolist.dao.TarefaDao;
 import br.todolist.dao.UsuarioDao;
-import br.todolist.model.Tarefa;
 import br.todolist.model.Usuario;
 
-public class UsuarioTest {
+public class UsuarioTest extends DatabaseTestCase{
 
 	public Connection connect;
 	public Usuario usuario;
 	public UsuarioDao dao;
 
+	private FileInputStream loadFile;
+	private IDataSet dataSet;
+	
 	@BeforeClass
 	public static void initClass() {
 
@@ -40,7 +47,11 @@ public class UsuarioTest {
 	}
 	
 	@Test
-	public void deveAdicionarUsuario() {
+	public void deveAdicionarUsuario() throws DataSetException, Exception {
+		
+		int rowCount = getDataSet().getTable("login").getRowCount();
+		System.out.println(rowCount);
+		
 		boolean result = false;
 		UsuarioDao dao = new UsuarioDao(connect);
 		Usuario usuario = new Usuario("usuarioteste", "123", 2);
@@ -105,6 +116,21 @@ public class UsuarioTest {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	protected IDatabaseConnection getConnection() throws Exception {
+		connect = new ConnectionFactory().getConnection();
+		System.out.println(connect);
+		return (IDatabaseConnection) connect;
+	}
+
+	@Override
+	protected IDataSet getDataSet() throws Exception {
+		loadFile = new FileInputStream("dataLogin.xml");
+		dataSet = new XmlDataSet(loadFile);
+		System.out.println(dataSet);
+		return dataSet;
 	}
 	
 }

@@ -11,12 +11,8 @@ import javax.servlet.http.HttpSession;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.internal.runners.statements.ExpectException;
-import org.junit.rules.ExpectedException;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 
 import br.todolist.dao.TarefaDao;
 import br.todolist.exception.AdicionaTarefaException;
@@ -58,11 +54,12 @@ public class AdicionarTarefaTest {
 		user.setNomeLogin("admin");
 		user.setSenha("123");
 		httpSession.setAttribute("userLogado", user);
-		user = (Usuario) httpSession.getAttribute("userLogado");
 		when(httpSession.getAttribute("userLogado")).thenReturn(user);
 
-		when(request.getParameter("nome")).thenReturn("");
-		when(request.getParameter("descricao")).thenReturn("");
+		user = (Usuario) httpSession.getAttribute("userLogado");
+		
+		when(request.getParameter("nome")).thenReturn(" ");
+		when(request.getParameter("descricao")).thenReturn(" ");
 		when(request.getParameter("id")).thenReturn("");
 		String nome = request.getParameter("nome");
 		String descricao = request.getParameter("descricao");

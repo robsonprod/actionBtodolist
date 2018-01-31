@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<login id="1" login="camilo" senha="123" cargo="1" />
+	<login id="2" login="camilo" senha="123" cargo="2" />
+</dataset>
